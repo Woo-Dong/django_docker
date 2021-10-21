@@ -1,0 +1,24 @@
+version: "3"
+services: 
+  django_server: 
+    build: 
+      context: ./django_server
+    container_name: django_server 
+    volumes: 
+      - static_volume:/APP/static
+    expose: 
+      - 8000
+
+  nginx: 
+    build: 
+      context: ./nginx
+    container_name: nginx
+    volumes: 
+      - static_volume:/static
+    ports:
+      - "80:80"
+    depends_on: 
+      - django_server
+    
+volumes:
+    static_volume:
